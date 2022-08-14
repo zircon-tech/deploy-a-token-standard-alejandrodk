@@ -9,7 +9,9 @@ describe("Zircon Token tests", () => {
     const ZirconToken = await ethers.getContractFactory("ZirconToken");
     const token = await ZirconToken.deploy(totalSupply);
 
-    return { token, totalSupply };
+    const [deployer] = await ethers.getSigners();
+
+    return { token, totalSupply, deployer };
   }
 
   it("Should deploy contract", async () => {
@@ -24,5 +26,14 @@ describe("Zircon Token tests", () => {
     );
 
     expect(await token.totalSupply()).to.eq(expected);
+  });
+
+  it("Should send the right amount to the owner", async () => {
+    const { deployer, totalSupply } = await loadFixture(deployContractFixture);
+    const ownerBalance = await deployer.getBalance();
+    const ownerEthers = ethers.utils.formatEther(ownerBalance);
+    const supply = ethers.utils.formatEther(totalSupply);
+
+    expect(parseFloat(ownerEthers)).gt(parseFloat(supply) - 1);
   });
 });
