@@ -6,7 +6,7 @@
   "author": "Alejandro Barrios <ottoabarriosp@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "REPORT_GAS=true npx hardhat test",
+    "test": "npx hardhat test",
     "init": "yarn add --dev hardhat && npx hardhat",
     "node": "npx hardhat node",
     "deploy:localhost": "npx hardhat run --network localhost scripts/deploy.ts",
